@@ -10,10 +10,9 @@ body {
     @apply text-3xl md:text-3xl font-bold text-gray-800 mb-12 text-center;
 }
 
-/* --- Swiper Slider Fix --- */
 .swiper {
     width: 100%;
-    height: 24rem; /* 384px - This gives the slider a fixed height */
+    height: 24rem; 
 }
 .swiper-slide {
     text-align: center;
@@ -93,4 +92,5 @@ body {
         transform: translateY(-50%);
     }
 }
+
 
