@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publications | Mechatronics & Robotics Lab</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Style for tab buttons to match your site's theme */
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        .tab-active {
+            background-color: #DBEAFE; /* blue-100 */
+            color: #1D4ED8; /* blue-700 */
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-700 flex flex-col min-h-screen">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-3">
+                <img src="images/Tezpur_University_logo.png" onerror="this.onerror=null;this.src='https://placehold.co/60x60/cccccc/000000?text=Logo';" alt="Tezpur University Logo" class="h-16 w-16 object-contain">
+                <span class="text-xl font-bold text-gray-800">Mechatronics & Robotics Lab, Tezpur University</span>
+            </a>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="index.html" class="text-gray-600 hover:text-blue-600">Home</a>
+                <a href="index.html#about" class="text-gray-600 hover:text-blue-600">About</a>
+                <a href="research.html" class="text-gray-600 hover:text-blue-600">Research</a>
+                <a href="people.html" class="text-gray-600 hover:text-blue-600">People</a>
+                <a href="publications.html" class="text-blue-600 font-semibold">Publications</a>
+                <a href="index.html#contact" class="text-gray-600 hover:text-blue-600">Contact</a>
+                <a href="webmaster.html" class="text-gray-600 hover:text-blue-600">Webmaster</a>
+                <a href="students_corner.html" class="bg-blue-100 text-blue-700 px-3 py-2 rounded-md hover:bg-blue-200">Students' Corner</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden"><i data-feather="menu" class="w-6 h-6"></i></button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 space-y-2">
+             <a href="index.html" class="block py-2 text-gray-600 hover:text-blue-600">Home</a>
+            <a href="index.html#about" class="block py-2 text-gray-600 hover:text-blue-600">About</a>
+            <a href="research.html" class="block py-2 text-gray-600 hover:text-blue-600">Research</a>
+            <a href="people.html" class="block py-2 text-gray-600 hover:text-blue-600">People</a>
+            <a href="publications.html" class="block py-2 text-blue-600 font-semibold">Publications</a>
+            <a href="index.html#contact" class="block py-2 text-gray-600 hover:text-blue-600">Contact</a>
+            <a href="webmaster.html" class="block py-2 text-gray-600 hover:text-blue-600">Webmaster</a>
+            <a href="students_corner.html" class="block py-2 text-gray-600 hover:text-blue-600">Students' Corner</a>
+        </div>
+    </header>
+
+    <main class="py-16 flex-grow">
+        <div class="container mx-auto px-6">
+            <h1 class="section-title">Publications</h1>
+
+            <div class="flex flex-wrap justify-center gap-2 md:gap-3 mb-12 border-b pb-4">
+                <button data-tab="journal" class="tab-button tab-active px-4 py-2 text-sm rounded-md">Journal Publications</button>
+                <button data-tab="conference" class="tab-button px-4 py-2 text-sm rounded-md">Conference Publications</button>
+                <button data-tab="book" class="tab-button px-4 py-2 text-sm rounded-md">Book Chapters</button>
+                <button data-tab="patent" class="tab-button px-4 py-2 text-sm rounded-md">Patents</button>
+                <button data-tab="design" class="tab-button px-4 py-2 text-sm rounded-md">Design Registration</button>
+                <button data-tab="other" class="tab-button px-4 py-2 text-sm rounded-md">Other Publications</button>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <div id="journal-content" class="tab-content space-y-6"></div>
+                <div id="conference-content" class="tab-content hidden space-y-6"></div>
+                <div id="book-content" class="tab-content hidden space-y-6"></div>
+                <div id="patent-content" class="tab-content hidden space-y-6"></div>
+                <div id="design-content" class="tab-content hidden space-y-6"></div>
+                <div id="other-content" class="tab-content hidden space-y-6"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-10">
+        <div class="container mx-auto px-6 text-center">
+            <p>© 2024 Mechatronics & Robotics Lab, Tezpur University. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        const firebaseConfig = {
+    apiKey: "AIzaSyAEkoTxVG1_GJnMLpD3iASw3BveRHlNQIE",
+    authDomain: "me-mechatronics-lab-website.firebaseapp.com",
+    projectId: "me-mechatronics-lab-website",
+    storageBucket: "me-mechatronics-lab-website.firebasestorage.app",
+    messagingSenderId: "876104574829",
+    appId: "1:876104574829:web:1f76814b0c1c089ca1dc64"
+  };
+
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // --- Tabbing Logic ---
+        const tabs = document.querySelectorAll('.tab-button');
+        const contents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetId = tab.dataset.tab;
+                tabs.forEach(t => t.classList.remove('tab-active'));
+                tab.classList.add('tab-active');
+                contents.forEach(content => {
+                    content.id === `${targetId}-content` ? content.classList.remove('hidden') : content.classList.add('hidden');
+                });
+            });
+        });
+
+        // --- Firebase Data Fetching and Sorting ---
+        const q = query(collection(db, "publications"), orderBy("year", "desc"));
+        onSnapshot(q, (querySnapshot) => {
+            contents.forEach(c => c.innerHTML = ''); // Clear all content areas
+
+            if (querySnapshot.empty) {
+                document.getElementById('journal-content').innerHTML = '<p class="text-center text-gray-500">No publications found.</p>';
+                return;
+            }
+
+            querySnapshot.forEach((doc) => {
+                const pub = doc.data();
+                // Assumes your documents have a 'type' field (e.g., 'journal', 'conference')
+                const type = pub.type || 'other';
+                const container = document.getElementById(`${type}-content`);
+
+                if (container) {
+                    const pubElement = document.createElement('div');
+                    pubElement.className = 'bg-white p-6 rounded-lg shadow-sm';
+                    pubElement.innerHTML = `<p class="leading-relaxed">${pub.authors}. "${pub.title}." <em>${pub.journal}</em>. ${pub.year}.</p>`;
+                    container.appendChild(pubElement);
+                }
+            });
+
+            // Add "not found" message to any empty tabs after sorting
+            contents.forEach(c => {
+                if (!c.hasChildNodes()) {
+                    c.innerHTML = '<p class="text-center text-gray-500">No publications in this category.</p>';
+                }
+            });
+
+            // Handle opening a page with a hash, e.g., publications.html#patent
+            const initialTab = window.location.hash.substring(1);
+            if (initialTab) {
+                document.querySelector(`button[data-tab="${initialTab}"]`)?.click();
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
